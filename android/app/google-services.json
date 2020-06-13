@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "928401049212",
+    "firebase_url": "https://linked-up-29119.firebaseio.com",
+    "project_id": "linked-up-29119",
+    "storage_bucket": "linked-up-29119.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928401049212:android:2de6aa4b35af8d29142bf9",
+        "android_client_info": {
+          "package_name": "com.skaran007.zoomclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928401049212-s7hih0a56ng0s4p2t120622j94af4crl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skaran007.zoomclone",
+            "certificate_hash": "f3dfd5605cf8210bf987976e1d16c9a8adae863d"
+          }
+        },
+        {
+          "client_id": "928401049212-gdnf574kip2f27p7siadgnttgl8qommh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh65Wjw7jcIoVnsa98HGIm4VzApgSIa7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928401049212-gdnf574kip2f27p7siadgnttgl8qommh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

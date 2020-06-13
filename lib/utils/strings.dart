@@ -1,0 +1,57 @@
+class Strings {
+  static const FEEDBACK = 'Feedback';
+  static const LOG_OUT = 'Log Out';
+  static const WELCOME = 'Welcome';
+  static const CONTINUE = 'CONTINUE';
+  static const CREATE_A_MEETING = 'Create a meeting';
+  static const EDIT_A_MEETING = 'Edit a meeting';
+  static const JOIN_A_MEETING = 'Join a meeting';
+  static const MY_MEETING = 'My Meeting';
+  static const MEETING_DETAIL = 'Meeting Detail';
+  static const JOIN = 'JOIN';
+  static const INVITE = 'INVITE';
+  static const ENTER_USER_NAME = 'user name';
+  static const ENTER_FIRST_NAME = 'first name';
+  static const ENTER_MEETING_ID = 'Enter Meeting id';
+  static const ENTER_LAST_NAME = 'last name';
+  static const THERE_IS_NOTHING_HERE_YET = 'Nothing here yet.';
+  static const SOMETHING_WENT_WRONG = 'Oops! Something ain\'t right.';
+  static const LIVING_IN = 'Living in';
+  static const MEETING_DELETED = 'Meeting Deleted';
+  static const PROFESSIONAL = 'Professional';
+  static const PROFILE_UPDATE = 'Profile Update';
+  static const STUDENT = 'Student';
+  static const LIVE = 'Live';
+  static const HISTORY = 'History';
+  static const MY_NETWORK = 'My Network';
+  static const TITLE = 'Title';
+  static const TYPE_YOUR_TITLE = 'Type Your title';
+  static const DESCRIPTION = 'Description';
+  static const TYPE_YOUR_DESCRIPTION = 'Type Your description';
+  static const SCHEDULE = 'Schedule';
+  static const NOW = 'Now';
+  static const LATER = 'Later';
+  static const RESEND = 'Resend';
+  static const REMOVE = 'Remove';
+  static const ENTER_OTP = 'Enter OTP';
+  static const SEND_OTP = 'SEND OTP';
+  static const PHONE_NUMBER = 'Phone number';
+  static const ADD_SPEAKER = 'Add Speakers';
+  static const CREATE_MEETING = 'Create meeting';
+  static const UPDATE_MEETING = 'Update meeting';
+  static const ADD = 'Add';
+  static const PLEASE_ENTER_VALID_DATA = 'Please enter valid data.';
+  static const USER_NAME_IS_NOT_AVAILABLE = 'User name is not available';
+  static const OTP_IS_INVALID = 'otp is invalid';
+  static const PLEASE_ENTER_VALID_DETAILS = 'Please enter valid details';
+  static const PLEASE_ENTER_COUNTRY_CODE = 'Please enter country code';
+  static const ADD_SPEAKERS_USERNAME = 'Add Speakers By Username';
+  static const SPEAKERS = 'Speakers';
+  static const WHEN_WOULD_YOU_LIKE_TO_GO_LIVE =
+      'When would you like to go for meeting';
+  static const PICK_DATE_AND_TIME = 'Pick date and time';
+  static const CHECK_YOUR_SMS_TO_FIND_THE_CODE =
+      'Check your SMS to find the code';
+  static const PERSONALISE = 'Personalise';
+  static const ACCOUNT_SETTINGS = 'Account Settings';
+}
