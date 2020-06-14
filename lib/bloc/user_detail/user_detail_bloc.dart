@@ -25,18 +25,23 @@ class UserDetailBloc extends Bloc<UserDetailEvent, UserDetailState> {
     } else if (event is UpdateUserDetail) {
       yield* _mapUpdateUserInfoToState(_api, event.userInfo);
     } else if (event is UploadProfilePhoto) {
-      yield* _mapUpdateProfilePhotoToState(_api, event.imageFile);
+      yield* _mapUpdateProfilePhotoToState(_api, event.imageFile, event.url);
     }
   }
 
   Stream<UserDetailState> _mapUpdateProfilePhotoToState(
-      Api api, File imageFile) async* {
+      Api api, File imageFile, String url) async* {
     try {
       yield UserProfilePhotoUpdating();
-
-      String userId = await Util.getCurrentUserId();
-      Map result = await api.uploadProfilePic(userId, imageFile);
-      yield UserProfilePhotoUpdated(data: result);
+      if(Util.isStringNotNull(url)) {
+        Map result = Map();
+        result['path'] = url;
+        yield UserProfilePhotoUpdated(data: result);
+      } else {
+        String userId = await Util.getCurrentUserId();
+        Map result = await api.uploadProfilePic(userId, imageFile);
+        yield UserProfilePhotoUpdated(data: result);
+      }
     } catch (error) {
       yield UserProfilePhotoNotUpdate();
     }

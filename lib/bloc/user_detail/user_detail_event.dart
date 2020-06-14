@@ -41,8 +41,9 @@ class UpdateUserDetail extends UserDetailEvent {
 
 class UploadProfilePhoto extends UserDetailEvent {
   final File imageFile;
+  final String url;
 
-  UploadProfilePhoto({this.imageFile});
+  UploadProfilePhoto({this.imageFile, this.url});
 
   @override
   String toString() => 'UpdateUserDetail';

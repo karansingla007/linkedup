@@ -8,7 +8,7 @@ import 'package:zoomclone/bloc/live_agora/live_agora.dart';
 import 'package:zoomclone/bloc/live_agora/live_agora_bloc.dart';
 import 'package:zoomclone/bloc/user_detail/user_detail.dart';
 import 'package:zoomclone/bottomSheets/invite_action_bottom_sheet.dart';
-import 'package:zoomclone/bottomSheets/request_to%20become_speaker.dart';
+import 'package:zoomclone/bottomSheets/request_to_become_speaker.dart';
 import 'package:zoomclone/bottomSheets/search_user_bottom_sheet.dart';
 import 'package:zoomclone/buttons/shape_button_small.dart';
 import 'package:zoomclone/dialogs/confirmation_dialog.dart';

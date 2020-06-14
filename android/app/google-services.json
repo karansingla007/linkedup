@@ -8,6 +8,43 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:928401049212:android:e1e4f1ff18e8ee28142bf9",
+        "android_client_info": {
+          "package_name": "com.linkedUp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928401049212-l4vv7dcjmduo6ocfm1p37a7jnc8ti0jd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.linkedUp",
+            "certificate_hash": "f3dfd5605cf8210bf987976e1d16c9a8adae863d"
+          }
+        },
+        {
+          "client_id": "928401049212-gdnf574kip2f27p7siadgnttgl8qommh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh65Wjw7jcIoVnsa98HGIm4VzApgSIa7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928401049212-gdnf574kip2f27p7siadgnttgl8qommh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:928401049212:android:2de6aa4b35af8d29142bf9",
         "android_client_info": {
           "package_name": "com.skaran007.zoomclone"

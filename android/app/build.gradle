@@ -30,7 +30,7 @@ android {
     signingConfigs {
         release {
             storeFile file(releaseKey)
-            keyAlias = 'key'
+            keyAlias = 'upload'
             storePassword 'varun123'
             keyPassword 'varun123'
         }

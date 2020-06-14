@@ -40,9 +40,10 @@ class LoginSignUpScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 32.0),
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.7,
+                height: MediaQuery.of(context).size.height * 0.8,
+                color: Colors.yellow,
                 child: SplashCarousel(
-                  height: MediaQuery.of(context).size.height * 0.646875,
+                  height: MediaQuery.of(context).size.height * 0.8,
                   widgets: <Widget>[
                     SplashItem(
                       title: 'Start a Meeting',
@@ -114,7 +115,7 @@ class LoginSignUpScreen extends StatelessWidget {
                 );
               },
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 24.0),
+                padding: const EdgeInsets.only(bottom: 16.0),
                 child: Container(
                   color: Colors.transparent,
                   padding: const EdgeInsets.only(bottom: 8.0),

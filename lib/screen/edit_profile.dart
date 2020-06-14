@@ -13,6 +13,7 @@ import 'package:zoomclone/bloc/user_detail/user_detail.dart';
 import 'package:zoomclone/buttons/shape_button_small.dart';
 import 'package:zoomclone/custom/radio_light.dart';
 import 'package:zoomclone/custom/wave_loader.dart';
+import 'package:zoomclone/dialogs/image_select_dialog.dart';
 import 'package:zoomclone/molecule/auto_complete.dart';
 import 'package:zoomclone/molecule/circle_image.dart';
 import 'package:zoomclone/screen/image_preview_screen.dart';
@@ -240,7 +241,7 @@ class EditProfile extends StatelessWidget {
                                         right: 0,
                                         top: 0,
                                         child: GestureDetector(
-                                          onTap: () => openGallery(),
+                                          onTap: () => openGallery(context),
                                           child: Container(
                                             color: Colors.transparent,
                                             width: 44.0,
@@ -291,7 +292,7 @@ class EditProfile extends StatelessWidget {
                                         right: 0,
                                         top: 0,
                                         child: GestureDetector(
-                                          onTap: () => openGallery(),
+                                          onTap: () => openGallery(context),
                                           child: Container(
                                             color: Colors.transparent,
                                             width: 44.0,
@@ -514,7 +515,33 @@ class EditProfile extends StatelessWidget {
     );
   }
 
-  openGallery() async {
+  openGallery(context) async {
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            elevation: 20,
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: Colors.white,
+                width: 1.0,
+                style: BorderStyle.solid,
+              ),
+              borderRadius:
+              BorderRadius.circular(8.0),
+            ),
+            content: ImageSelectDialog(onSelectGallery, onClickSave),
+          );
+        });
+  }
+
+  onClickSave(String url) {
+    uploadProfilePhoto.add(UploadProfilePhoto(url: url));
+  }
+
+  onSelectGallery() async {
     var gallery = await ImagePicker.pickImage(
       source: ImageSource.gallery,
     );
