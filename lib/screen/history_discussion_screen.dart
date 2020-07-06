@@ -75,7 +75,7 @@ class HistoryDiscussionScreen extends StatelessWidget {
                       );
                     } else {
                       return Container(
-                          height: MediaQuery.of(context).size.height - 120,
+                          height: MediaQuery.of(context).size.height - 150,
                           child: Center(child: EmptyPlaceHolder()));
                     }
                   } else {

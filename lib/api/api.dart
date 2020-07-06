@@ -94,6 +94,16 @@ class Api {
     return response as Map;
   }
 
+  Future<Map> updateUserProfilePic({String profilePicUrl}) async {
+    final unreadAmaCountUrl = '$baseUrl/updateUserInfoProficPicUrl';
+
+    Map body = Map();
+    body['profilePicUrl'] = profilePicUrl;
+
+    final response = await _apiClient.put(unreadAmaCountUrl, body: body);
+    return response as Map;
+  }
+
   Future<Map> getSessionInfoById({String sessionId}) async {
     final unreadAmaCountUrl = '$baseUrl/getSessionInfo/$sessionId';
 
@@ -191,8 +201,7 @@ class Api {
   }) async {
     final unreadAmaCountUrl = '$baseUrl/insertFeedback';
 
-    Map body = Map();
-    final response = await _apiClient.post(unreadAmaCountUrl, body: body);
+    final response = await _apiClient.post(unreadAmaCountUrl, body: deviceInfo);
     return response as Map;
   }
 

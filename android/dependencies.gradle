@@ -1,3 +1,3 @@
 ext {
-    releaseKey = '/Users/skaran/Desktop/linkedUp/linkedUp/key.jks'
+    releaseKey = '/Users/skaran/Desktop/linkedUp/linkedUp/keystore.jks'
 }

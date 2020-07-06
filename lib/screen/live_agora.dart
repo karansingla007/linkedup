@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:zoomclone/bloc/live_agora/live_agora.dart';
 import 'package:zoomclone/bloc/live_agora/live_agora_bloc.dart';
@@ -17,6 +18,7 @@ import 'package:zoomclone/molecule/circle_image.dart';
 import 'package:zoomclone/molecule/text_user_name_with_bloc.dart';
 import 'package:zoomclone/screen/end_meeting_screen.dart';
 import 'package:zoomclone/utils/constants.dart';
+import 'package:zoomclone/utils/shared_pref_constant.dart';
 import 'package:zoomclone/utils/util.dart';
 import 'package:zoomclone/widgets/comment_box.dart';
 import 'package:zoomclone/widgets/user_comment.dart';
@@ -52,6 +54,8 @@ class _LiveAgoraState extends State<LiveAgora> {
   final UserDetailBloc userDetailBloc = UserDetailBloc();
   int currentUid = 0;
   final AgoraSocketBloc agoraSocketBloc = AgoraSocketBloc();
+  bool isVidoMute = false;
+  bool isAudioMute = false;
 
   @override
   void dispose() {
@@ -83,18 +87,37 @@ class _LiveAgoraState extends State<LiveAgora> {
 
     await _initAgoraRtcEngine();
     _addAgoraEventHandlers();
+
+
     await AgoraRtcEngine.enableWebSdkInteroperability(true);
-    await AgoraRtcEngine.setParameters(
-        '''{\"che.video.lowBitRateStreamParameter\":{\"width\":320,\"height\":180,\"frameRate\":15,\"bitRate\":140}}''');
-    if (!Util.isStringNotNull(widget.userRole) ||
-        widget.userRole == Constants.VIEWER) {
-      await AgoraRtcEngine.setClientRole(ClientRole.Audience);
+//    await AgoraRtcEngine.setParameters(
+//        '''{\"che.video.lowBitRateStreamParameter\":{\"width\":320,\"height\":180,\"frameRate\":15,\"bitRate\":140}}''');
+    await AgoraRtcEngine.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    if (widget.userRole == Constants.VIEWER) {
+      try {
+        await AgoraRtcEngine.setClientRole(ClientRole.Audience);
+      } catch(_) {
+        print(_);
+      }
     } else {
+      setAudioVideo();
       await AgoraRtcEngine.setClientRole(ClientRole.Broadcaster);
     }
+    VideoEncoderConfiguration config = VideoEncoderConfiguration();
+    config.dimensions = Size(640, 480);
+    config.orientationMode = VideoOutputOrientationMode.FixedPortrait;
+    config.frameRate = 15;
+    config.bitrate = 0;
+    await AgoraRtcEngine.setVideoEncoderConfiguration(config);
     String userId = await Util.getCurrentUserId();
     await AgoraRtcEngine.joinChannel(
         null, widget.meetingId, null, int.parse(userId));
+  }
+
+  void setAudioVideo() async {
+    final prefs = await SharedPreferences.getInstance();
+    isAudioMute = prefs.getBool(SharedPreferenceConstant.MUTE_AUDIO_ALWAYS) ?? false;
+    isVidoMute = prefs.getBool(SharedPreferenceConstant.MUTE_VIDEO_ALWAYS) ?? false;
   }
 
   requestPermission() async {
@@ -130,6 +153,17 @@ class _LiveAgoraState extends State<LiveAgora> {
       agoraSocketBloc.add(
           JoinSessionEvent(uid.toString(), widget.userRole, widget.meetingId));
       currentUid = uid;
+      try {
+        if (Util.isStringNotNull(widget.userRole) &&
+            widget.userRole != Constants.VIEWER) {
+          AgoraRtcEngine.muteLocalVideoStream(isVidoMute);
+          AgoraRtcEngine.muteLocalAudioStream(isAudioMute);
+          audioMuted = isAudioMute;
+          videoMuted = isVidoMute;
+        }
+      } catch(_){
+        print(_);
+      }
       setState(() {
         final info = 'onJoinChannel: $channel, uid: $uid';
         _infoStrings.add(info);
@@ -208,6 +242,9 @@ class _LiveAgoraState extends State<LiveAgora> {
     final List<AgoraRenderWidget> list = [
       AgoraRenderWidget(currentUid, local: true, preview: true),
     ];
+    if(widget.userRole == Constants.VIEWER) {
+      list.removeLast();
+    }
     _users.forEach((int uid) => list.add(AgoraRenderWidget(uid)));
     return list;
   }
@@ -279,13 +316,6 @@ class _LiveAgoraState extends State<LiveAgora> {
                     actionUid = null;
                   });
                 },
-//                onLongPress: () {
-//                  if (widget.userRole == Constants.HOST && views[i].uid != currentUid) {
-//                    setState(() {
-//                      actionUid = views[i].uid;
-//                    });
-//                  }
-//                },
                 child: Stack(
                   children: <Widget>[
                     Container(
@@ -681,46 +711,55 @@ class _LiveAgoraState extends State<LiveAgora> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                audioMuted = !audioMuted;
-                                AgoraRtcEngine.muteLocalAudioStream(audioMuted);
-                              });
-                            },
-                            child: Icon(
-                              audioMuted ? Icons.mic_off : Icons.mic,
-                              color: Colors.white,
-                              size: 25,
+                          Visibility(
+                            visible: widget.userRole != Constants.VIEWER,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  audioMuted = !audioMuted;
+                                  AgoraRtcEngine.muteLocalAudioStream(audioMuted);
+                                });
+                              },
+                              child: Icon(
+                                audioMuted ? Icons.mic_off : Icons.mic,
+                                color: Colors.white,
+                                size: 25,
+                              ),
                             ),
                           ),
                           SizedBox(
                             width: 16,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                videoMuted = !videoMuted;
-                                AgoraRtcEngine.muteLocalVideoStream(videoMuted);
-                              });
-                            },
-                            child: Icon(
-                              videoMuted ? Icons.videocam_off : Icons.videocam,
-                              color: Colors.white,
-                              size: 25,
+                          Visibility(
+                            visible: widget.userRole != Constants.VIEWER,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  videoMuted = !videoMuted;
+                                  AgoraRtcEngine.muteLocalVideoStream(videoMuted);
+                                });
+                              },
+                              child: Icon(
+                                videoMuted ? Icons.videocam_off : Icons.videocam,
+                                color: Colors.white,
+                                size: 25,
+                              ),
                             ),
                           ),
                           SizedBox(
                             width: 16,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              AgoraRtcEngine.switchCamera();
-                            },
-                            child: Icon(
-                              Icons.switch_camera,
-                              color: Colors.white,
-                              size: 25,
+                          Visibility(
+                            visible: widget.userRole != Constants.VIEWER,
+                            child: GestureDetector(
+                              onTap: () {
+                                AgoraRtcEngine.switchCamera();
+                              },
+                              child: Icon(
+                                Icons.switch_camera,
+                                color: Colors.white,
+                                size: 25,
+                              ),
                             ),
                           ),
                           SizedBox(

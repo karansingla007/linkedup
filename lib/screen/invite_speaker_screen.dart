@@ -46,6 +46,7 @@ class _InviteSpeakerScreenState extends State<InviteSpeakerScreen> {
         listener: (context, state) {
           if (state is CreateSessionScreenLoaded) {
             Navigator.pop(context);
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(

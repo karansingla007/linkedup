@@ -10,6 +10,11 @@ class FeedbackLoading extends FeedbackState {
   String toString() => 'FeedbackLoading';
 }
 
+class FeedbackSubmiting extends FeedbackState {
+  @override
+  String toString() => 'FeedbackSubmiting';
+}
+
 class FeedbackLoaded extends FeedbackState {
   final Map response;
 

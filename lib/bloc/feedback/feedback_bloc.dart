@@ -23,6 +23,7 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
 
   Stream<FeedbackState> _mapLoadFeedbackToState(Api api, Map body) async* {
     try {
+      yield FeedbackSubmiting();
       final prefs = await SharedPreferences.getInstance();
       String userId = prefs.getString(SharedPreferenceConstant.CURRENT_USER_ID);
       body['userId'] = userId;

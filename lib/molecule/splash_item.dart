@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zoomclone/atoms/hero_text.dart';
 import 'package:zoomclone/atoms/text_small_title.dart';
+import 'package:zoomclone/custom/image_loader.dart';
 
 class SplashItem extends StatelessWidget {
-  final String image;
+  final Widget image;
   final String text;
   final String title;
 
@@ -31,7 +32,7 @@ class SplashItem extends StatelessWidget {
           ),
           Container(
             height: 300,
-            color: Colors.blue,
+            child: image,
           ),
         ],
       ),

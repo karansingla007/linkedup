@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zoomclone/atoms/image/splash_image_1.dart';
+import 'package:zoomclone/atoms/image/splash_image_2.dart';
 import 'package:zoomclone/atoms/text_small_title.dart';
 import 'package:zoomclone/bloc/login_signup/login_signup.dart';
 import 'package:zoomclone/buttons/shape_button_big_fill_icon.dart';
@@ -40,33 +42,25 @@ class LoginSignUpScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 32.0),
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.8,
-                color: Colors.yellow,
+                height: MediaQuery.of(context).size.height * 0.7,
                 child: SplashCarousel(
-                  height: MediaQuery.of(context).size.height * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.7,
                   widgets: <Widget>[
                     SplashItem(
                       title: 'Start a Meeting',
                       text: 'Start or join a video meeting on the go',
+                      image: SplashImage1(),
                     ),
                     SplashItem(
                       title: 'Share your Content',
                       text: 'They see what you see',
-                    ),
-                    SplashItem(
-                      title: 'Message Your Team',
-                      text: 'Send text, images',
+                      image: SplashImage2(),
                     ),
                   ],
                 ),
               ),
             ),
-//            RoundedShapeButton(
-//              text: 'Join a Meeting',
-//              textColor: Colors.white,
-//              color: Colors.blue,
-//              onPressed: () {},
-//            ),
+            Expanded(child: Container(),),
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Row(
@@ -121,7 +115,7 @@ class LoginSignUpScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: TextSmallTitle(
                     'Sign in with Mobile Number',
-                    color: Colors.black,
+                    color: Colors.blueGrey,
                   ),
                 ),
               ),

@@ -1,18 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' as inputFormatterx;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:zoomclone/api/google_api.dart';
 import 'package:zoomclone/atoms/large_title.dart';
 import 'package:zoomclone/atoms/text_big_title.dart';
 import 'package:zoomclone/atoms/text_body_1.dart';
 import 'package:zoomclone/atoms/text_input.dart';
+import 'package:zoomclone/bloc/user_detail/user_detail.dart';
 import 'package:zoomclone/bloc/welcome_screen/welcome_screen.dart';
 import 'package:zoomclone/buttons/rounded_shape_button.dart';
 import 'package:zoomclone/custom/wave_loader.dart';
+import 'package:zoomclone/dialogs/image_select_dialog.dart';
 import 'package:zoomclone/molecule/auto_complete.dart';
 import 'package:zoomclone/molecule/circle_image.dart';
+import 'package:zoomclone/screen/image_preview_screen.dart';
 import 'package:zoomclone/screen/user_info_screen.dart';
+import 'package:zoomclone/shimmer/circle_shimmer.dart';
+import 'package:zoomclone/utils/shared_pref_constant.dart';
 import 'package:zoomclone/utils/strings.dart';
 import 'package:zoomclone/utils/util.dart';
 import 'package:zoomclone/widgets/empty_place_holder.dart';
@@ -24,11 +32,13 @@ class WelcomeScreen extends StatelessWidget {
   WelcomeScreen() {
     welcomeScreenBloc.add(LoadWelcomeScreen());
   }
+
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController livingInEditingController =
       TextEditingController();
+  final UserDetailBloc uploadProfilePhoto = UserDetailBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -101,12 +111,138 @@ class WelcomeScreen extends StatelessWidget {
                                 left: 16.0, right: 16, top: 58),
                             child: Row(
                               children: <Widget>[
-                                CircleImageWithBorder(
-                                  state.data['profilePicUrl'],
-                                  signature: Util.getSignatureOfName(
-                                      firstName: state.data['firstName'],
-                                      lastName: state.data['lastName']),
-                                ),
+                                BlocBuilder(
+                                    bloc: uploadProfilePhoto,
+                                    builder: (context, userProfilePhotoState) {
+                                      if (userProfilePhotoState
+                                          is UserProfilePhotoUpdating) {
+                                        return CircleShimmer(
+                                          height: 88,
+                                          width: 88,
+                                        );
+                                      } else if (userProfilePhotoState
+                                          is UserProfilePhotoUpdated) {
+                                        updateSharedPrefImage(
+                                            userProfilePhotoState.data['path']);
+                                        return Container(
+                                          height: 99,
+                                          width: 99,
+                                          color: Colors.transparent,
+                                          child: Stack(
+                                            overflow: Overflow.visible,
+                                            children: <Widget>[
+                                              Align(
+                                                  alignment:
+                                                      Alignment.bottomCenter,
+                                                  child: GestureDetector(
+                                                      onTap: () =>
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          ImagePreviewScreen(
+                                                                            image:
+                                                                                userProfilePhotoState.data['path'],
+                                                                          ))),
+                                                      child: Hero(
+                                                        tag: 'imageView',
+                                                        child:
+                                                            CircleImageWithBorder(
+                                                          userProfilePhotoState
+                                                              .data['path'],
+                                                          signature: Util
+                                                              .getSignatureOfName(
+                                                                  firstName: state
+                                                                          .data[
+                                                                      'firstName'],
+                                                                  lastName: state
+                                                                          .data[
+                                                                      'lastName']),
+                                                        ),
+                                                      ))),
+                                              Positioned(
+                                                right: 0,
+                                                top: 0,
+                                                child: GestureDetector(
+                                                  onTap: () =>
+                                                      openGallery(context),
+                                                  child: Container(
+                                                    color: Colors.transparent,
+                                                    width: 44.0,
+                                                    height: 44.0,
+                                                    child: Icon(
+                                                      Icons.photo_camera,
+                                                      size: 30.0,
+                                                      color: Colors.blue,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      } else {
+                                        return Container(
+                                          height: 99,
+                                          width: 99,
+                                          color: Colors.transparent,
+                                          child: Stack(
+                                            overflow: Overflow.visible,
+                                            children: <Widget>[
+                                              Align(
+                                                  alignment:
+                                                      Alignment.bottomCenter,
+                                                  child: GestureDetector(
+                                                      onTap: () =>
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          ImagePreviewScreen(
+                                                                            image:
+                                                                                state.data['profilePicUrl'],
+                                                                          ))),
+                                                      child: Hero(
+                                                        tag: 'imageView',
+                                                        child:
+                                                            CircleImageWithBorder(
+                                                          state.data[
+                                                              'profilePicUrl'],
+                                                          signature: Util
+                                                              .getSignatureOfName(
+                                                                  firstName: state
+                                                                          .data[
+                                                                      'firstName'],
+                                                                  lastName: state
+                                                                          .data[
+                                                                      'lastName']),
+                                                        ),
+                                                      ))),
+                                              Positioned(
+                                                right: 0,
+                                                top: 0,
+                                                child: GestureDetector(
+                                                  onTap: () =>
+                                                      openGallery(context),
+                                                  child: Container(
+                                                    color: Colors.transparent,
+                                                    width: 44.0,
+                                                    height: 44.0,
+                                                    child: Icon(
+                                                      Icons.photo_camera,
+                                                      size: 30.0,
+                                                      color: Colors.blue,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                    }),
                                 SizedBox(
                                   width: 16,
                                 ),
@@ -223,7 +359,7 @@ class WelcomeScreen extends StatelessWidget {
     if (Util.isStringNotNull(firstNameController.text) &&
         Util.isStringNotNull(lastNameController.text) &&
         Util.isStringNotNull(livingInEditingController.text) &&
-        Util.isStringNotNull(userNameController.text)) {
+        Util.isStringNotNull(userNameController.text) && Util.isAlpha(firstNameController.text) && Util.isAlpha(lastNameController.text)) {
       Map body = Map();
       body['userName'] = userNameController.text;
       body['firstName'] = firstNameController.text;
@@ -238,5 +374,42 @@ class WelcomeScreen extends StatelessWidget {
         duration: Toast.LENGTH_LONG,
       );
     }
+  }
+
+  openGallery(context) async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            elevation: 20,
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: Colors.white,
+                width: 1.0,
+                style: BorderStyle.solid,
+              ),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            content: ImageSelectDialog(onSelectGallery, onClickSave),
+          );
+        });
+  }
+
+  onClickSave(String url) {
+    uploadProfilePhoto.add(UploadProfilePhoto(url: url));
+  }
+
+  onSelectGallery() async {
+    var gallery = await ImagePicker.pickImage(
+      source: ImageSource.gallery,
+    );
+    uploadProfilePhoto.add(UploadProfilePhoto(imageFile: gallery));
+  }
+
+  void updateSharedPrefImage(imageUrl) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(
+        SharedPreferenceConstant.CURRENT_USER_PROFILE_PIC, imageUrl);
   }
 }

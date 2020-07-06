@@ -40,7 +40,7 @@ class CircleImageWithBorder extends StatelessWidget {
             shape: BoxShape.circle, color: Styles.getRandomColor()),
         child: Center(
           child: TextBigTitle(
-            signature,
+            signature ?? '',
             fontWeight: FontWeight.normal,
           ),
         ),

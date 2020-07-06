@@ -9,4 +9,8 @@ class SharedPreferenceConstant {
   static const String CURRENT_USER_LOCATION = "currentUserLocation";
   static const String CURRENT_USER_DESIGNATION = "currentUserDesignation";
   static const String IS_LOAD_WELCOME = "isLoadWelcome";
+
+  static const String MUTE_VIDEO_ALWAYS = "muteVideoAlways";
+  static const String MUTE_AUDIO_ALWAYS = "muteAudioAlways";
+
 }

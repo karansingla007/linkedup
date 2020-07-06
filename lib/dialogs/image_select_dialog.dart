@@ -27,6 +27,7 @@ class _ImageSelectDialogState extends State<ImageSelectDialog> {
             Expanded(child: Container(),),
             GestureDetector(
               onTap: () {
+                Navigator.pop(context);
                 widget.onSelecteGallery();
               },
               child: Container(

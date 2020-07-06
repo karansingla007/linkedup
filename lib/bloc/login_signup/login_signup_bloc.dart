@@ -33,8 +33,6 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
       Map data = Map();
       data['userName'] = 'user';
       data['mobileNumber'] = contactNumber;
-      data['profilePicUrl'] =
-          'https://api.adorable.io/avatars/48/abott@adorable.png';
       Map result = await mainRepo.loginSignUpApi(userInfo: data);
 
       SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -180,39 +180,50 @@ class Util {
   }
 
   static Future<Map<String, dynamic>> loadDeviceInfo() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    Map<String, dynamic> _deviceParameters = Map();
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      _deviceParameters = _loadAndroidParameters(androidInfo);
-      return _deviceParameters;
-    } else {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      _deviceParameters = _loadIosParameters(iosInfo);
-      return _deviceParameters;
+    try {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      Map<String, dynamic> _deviceParameters = Map();
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        _deviceParameters = _loadAndroidParameters(androidInfo);
+        return _deviceParameters;
+      } else {
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        _deviceParameters = _loadIosParameters(iosInfo);
+        return _deviceParameters;
+      }
+    } catch(_) {
+      print(_);
+      return null;
+
     }
   }
 
   static Map _loadAndroidParameters(AndroidDeviceInfo androidDeviceInfo) {
-    Map<String, dynamic> _deviceParameters = Map();
+    try {
+      Map<String, dynamic> _deviceParameters = Map();
 
-    _deviceParameters["brand"] = androidDeviceInfo.brand;
-    _deviceParameters["device"] = androidDeviceInfo.device;
-    _deviceParameters["manufacturer"] = androidDeviceInfo.manufacturer;
-    _deviceParameters["model"] = androidDeviceInfo.model;
-    _deviceParameters["product"] = androidDeviceInfo.product;
-    _deviceParameters["versionBaseOs"] = androidDeviceInfo.version.baseOS;
-    _deviceParameters["versionCodename"] = androidDeviceInfo.version.codename;
-    _deviceParameters["versionIncremental"] =
-        androidDeviceInfo.version.incremental;
-    _deviceParameters["versionPreviewSdk"] =
-        androidDeviceInfo.version.previewSdkInt;
-    _deviceParameters["versionRelase"] = androidDeviceInfo.version.release;
-    _deviceParameters["versionSdk"] = androidDeviceInfo.version.sdkInt;
-    _deviceParameters["versionSecurityPatch"] =
-        androidDeviceInfo.version.securityPatch;
+      _deviceParameters["brand"] = androidDeviceInfo.brand;
+      _deviceParameters["device"] = androidDeviceInfo.device;
+      _deviceParameters["manufacturer"] = androidDeviceInfo.manufacturer;
+      _deviceParameters["model"] = androidDeviceInfo.model;
+      _deviceParameters["product"] = androidDeviceInfo.product;
+      _deviceParameters["versionBaseOs"] = androidDeviceInfo.version.baseOS;
+      _deviceParameters["versionCodename"] = androidDeviceInfo.version.codename;
+      _deviceParameters["versionIncremental"] =
+          androidDeviceInfo.version.incremental;
+      _deviceParameters["versionPreviewSdk"] =
+          androidDeviceInfo.version.previewSdkInt;
+      _deviceParameters["versionRelase"] = androidDeviceInfo.version.release;
+      _deviceParameters["versionSdk"] = androidDeviceInfo.version.sdkInt;
+      _deviceParameters["versionSecurityPatch"] =
+          androidDeviceInfo.version.securityPatch;
 
-    return _deviceParameters;
+      return _deviceParameters;
+    } catch(_) {
+      print(_);
+      return null;
+    }
   }
 
   static Map _loadIosParameters(IosDeviceInfo iosInfo) {
@@ -231,5 +242,10 @@ class Util {
     _deviceParameters["versionPreviewSdk"] = iosInfo.utsname.sysname;
 
     return _deviceParameters;
+  }
+
+  static bool isAlpha(String name) {
+    final validCharacters = RegExp('.*[^a-z].*');
+    return !validCharacters.hasMatch(name);
   }
 }

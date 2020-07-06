@@ -411,6 +411,9 @@ class MeetingDetailScreen extends StatelessWidget {
                                                     LiveMeeting(
                                                       meetingId: meetingId,
                                                       userRole: userRole,
+                                                      hostUser: state
+                                                          .sessionInfo[
+                                                      'hostUser'],
                                                     )),
                                           );
                                         },

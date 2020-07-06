@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextInput extends StatelessWidget {
   final String hintText;
@@ -28,10 +29,12 @@ class TextInput extends StatelessWidget {
   final TextStyle hintStyle;
   final String counterText;
   final Color cursorColor;
+  final List<TextInputFormatter> inputFormatters;
 
   const TextInput({
     Key key,
     this.hintText,
+    this.inputFormatters,
     this.textColor = Colors.black,
     this.label,
     this.controller,
@@ -72,6 +75,7 @@ class TextInput extends StatelessWidget {
       readOnly: readOnly,
       focusNode: focusNode,
       autofocus: autoFocus,
+
       style: TextStyle(color: textColor, fontSize: fontSize),
       enabled: enabled,
       decoration: InputDecoration(

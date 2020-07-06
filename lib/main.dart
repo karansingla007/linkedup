@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:screen/screen.dart';
 import 'package:zoomclone/bloc/main/main.dart';
 import 'package:zoomclone/screen/home_screen.dart';
 import 'package:zoomclone/screen/login_sign_up_screen.dart';
@@ -25,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     _initShareIntent();
+    Screen.keepOn(true);
     super.initState();
   }
 

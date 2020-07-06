@@ -33,6 +33,8 @@ class UserDetailBloc extends Bloc<UserDetailEvent, UserDetailState> {
       Api api, File imageFile, String url) async* {
     try {
       yield UserProfilePhotoUpdating();
+      String userId = await Util.getCurrentUserId();
+      Map result = await api.updateUserProfilePic(profilePicUrl: url);
       if(Util.isStringNotNull(url)) {
         Map result = Map();
         result['path'] = url;

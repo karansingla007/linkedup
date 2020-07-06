@@ -7,6 +7,7 @@ import 'package:zoomclone/buttons/rounded_shape_button.dart';
 import 'package:zoomclone/screen/create_feedback_screen.dart';
 import 'package:zoomclone/screen/edit_profile.dart';
 import 'package:zoomclone/screen/my_meetings_screen.dart';
+import 'package:zoomclone/screen/setting_screen.dart';
 import 'package:zoomclone/utils/strings.dart';
 import 'package:zoomclone/utils/util.dart';
 import 'package:zoomclone/widgets/profile_action_widget.dart';
@@ -100,7 +101,12 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingScreen()),
+              );
+            },
             child: ProfileActionWidget(
               text: 'Settings',
               icon: Icon(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toast/toast.dart';
 import 'package:zoomclone/atoms/large_title.dart';
 import 'package:zoomclone/atoms/text_input.dart';
 import 'package:zoomclone/bloc/welcome_screen/welcome_screen.dart';
@@ -10,6 +11,7 @@ import 'package:zoomclone/custom/wave_loader.dart';
 import 'package:zoomclone/screen/user_info_age_screen.dart';
 import 'package:zoomclone/utils/constants.dart';
 import 'package:zoomclone/utils/strings.dart';
+import 'package:zoomclone/utils/util.dart';
 
 class UserInfoScreen extends StatelessWidget {
   final TextEditingController designationEditingController =
@@ -112,12 +114,22 @@ class UserInfoScreen extends StatelessWidget {
                     return RoundedShapeButton(
                       text: Strings.CONTINUE,
                       onPressed: () {
-                        Map body = Map();
-                        body['userType'] = userType;
-                        body['designation'] = designationEditingController.text;
-                        body['company'] = companyEditingController.text;
-                        welcomeScreenBloc
-                            .add(SendUserDataDesignation(userInfo: body));
+                        if(Util.isStringNotNull(designationEditingController.text) && Util.isStringNotNull(companyEditingController.text)) {
+                          Map body = Map();
+                          body['userType'] = userType;
+                          body['designation'] = designationEditingController.text;
+                          body['company'] = companyEditingController.text;
+                          welcomeScreenBloc
+                              .add(SendUserDataDesignation(userInfo: body));
+                        } else {
+                          Toast.show(
+                            Strings.PLEASE_ENTER_VALID_DATA,
+                            context,
+                            gravity: Toast.CENTER,
+                            duration: Toast.LENGTH_LONG,
+                          );
+                        }
+
                       },
                       color: Colors.blue,
                       textColor: Colors.white,
