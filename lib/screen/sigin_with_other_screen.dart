@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zoomclone/atoms/hero_text.dart';
+import 'package:zoomclone/atoms/text_body_1.dart';
+import 'package:zoomclone/atoms/text_body_2.dart';
 import 'package:zoomclone/atoms/text_input.dart';
 import 'package:zoomclone/buttons/rounded_shape_button.dart';
 import 'package:zoomclone/molecule/drop_down_country_code.dart';
@@ -16,9 +19,19 @@ class SigninWithOtherScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Align(
-              alignment: Alignment.center,
-              child: Padding(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 32.0),
+                    child: TextHero(
+                      'Enter Phone Number',
+                      color: Colors.black,
+                    ),
+                  )),
+              Padding(
                 padding: const EdgeInsets.all(32.0),
                 child: Row(
                   children: <Widget>[
@@ -37,7 +50,9 @@ class SigninWithOtherScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              )),
+              ),
+            ],
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(

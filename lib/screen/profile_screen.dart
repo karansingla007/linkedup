@@ -7,6 +7,7 @@ import 'package:zoomclone/buttons/rounded_shape_button.dart';
 import 'package:zoomclone/screen/create_feedback_screen.dart';
 import 'package:zoomclone/screen/edit_profile.dart';
 import 'package:zoomclone/screen/my_meetings_screen.dart';
+import 'package:zoomclone/screen/privacy_policy_screen.dart';
 import 'package:zoomclone/screen/setting_screen.dart';
 import 'package:zoomclone/utils/strings.dart';
 import 'package:zoomclone/utils/util.dart';
@@ -111,6 +112,21 @@ class ProfileScreen extends StatelessWidget {
               text: 'Settings',
               icon: Icon(
                 Icons.settings,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TermsAndCondition()),
+              );
+            },
+            child: ProfileActionWidget(
+              text: 'Privacy Policy',
+              icon: Icon(
+                Icons.content_paste,
                 color: Colors.white,
               ),
             ),

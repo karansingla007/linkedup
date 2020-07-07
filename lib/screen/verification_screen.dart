@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toast/toast.dart';
+import 'package:zoomclone/atoms/hero_text.dart';
 import 'package:zoomclone/atoms/text_body_1.dart';
 import 'package:zoomclone/atoms/text_body_2.dart';
 import 'package:zoomclone/atoms/text_input.dart';
@@ -95,15 +96,28 @@ class VerficationScreen extends StatelessWidget {
           children: <Widget>[
             Align(
                 alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: TextInput(
-                    keyboardType: TextInputType.number,
-                    hintText: Strings.ENTER_OTP,
-                    maxLength: 6,
-                    maxLines: 1,
-                    controller: otpEditingController,
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 32.0),
+                      child: TextHero(
+                        'Enter OTP',
+                        color: Colors.black,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(32.0),
+                      child: TextInput(
+                        keyboardType: TextInputType.number,
+                        hintText: Strings.ENTER_OTP,
+                        maxLength: 6,
+                        maxLines: 1,
+                        controller: otpEditingController,
+                      ),
+                    ),
+                  ],
                 )),
             Align(
               alignment: Alignment.bottomCenter,
