@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zoomclone/atoms/image/splash_image_1.dart';
 import 'package:zoomclone/atoms/image/splash_image_2.dart';
+import 'package:zoomclone/atoms/text_button_small.dart';
 import 'package:zoomclone/atoms/text_small_title.dart';
 import 'package:zoomclone/bloc/login_signup/login_signup.dart';
 import 'package:zoomclone/buttons/shape_button_big_fill_icon.dart';
@@ -10,6 +11,7 @@ import 'package:zoomclone/icons/icon_facebook_logo.dart';
 import 'package:zoomclone/icons/icon_google_logo.dart';
 import 'package:zoomclone/molecule/splash_item.dart';
 import 'package:zoomclone/screen/home_screen.dart';
+import 'package:zoomclone/screen/privacy_policy_screen.dart';
 import 'package:zoomclone/screen/sigin_with_other_screen.dart';
 import 'package:zoomclone/screen/welcome_screen.dart';
 import 'package:zoomclone/utils/constants.dart';
@@ -60,7 +62,9 @@ class LoginSignUpScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(child: Container(),),
+            Expanded(
+              child: Container(),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Row(
@@ -116,6 +120,34 @@ class LoginSignUpScreen extends StatelessWidget {
                   child: TextSmallTitle(
                     'Sign in with Mobile Number',
                     color: Colors.blueGrey,
+                  ),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TermsAndCondition()),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Container(
+                  color: Colors.transparent,
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      TextSmallButton(
+                        'By continuing, i accept ',
+                        color: Colors.black,
+                      ),
+                      TextSmallButton(
+                        'Privacy Policy',
+                        color: Colors.blueGrey,
+                      ),
+                    ],
                   ),
                 ),
               ),
