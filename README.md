@@ -1,4 +1,4 @@
-# zoomclone
+# LinkedUp
 
 A new Flutter application.
 
